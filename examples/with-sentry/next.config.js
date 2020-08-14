@@ -9,7 +9,6 @@ const {
   SENTRY_ORG,
   SENTRY_PROJECT,
   SENTRY_AUTH_TOKEN,
-  NODE_ENV,
   VERCEL_GITHUB_COMMIT_SHA,
   VERCEL_GITLAB_COMMIT_SHA,
   VERCEL_BITBUCKET_COMMIT_SHA,
@@ -21,6 +20,8 @@ const COMMIT_SHA =
   VERCEL_BITBUCKET_COMMIT_SHA
 
 process.env.SENTRY_DSN = SENTRY_DSN
+
+const basePath = '/test'
 
 module.exports = withSourceMaps({
   serverRuntimeConfig: {
@@ -55,8 +56,7 @@ module.exports = withSourceMaps({
       SENTRY_ORG &&
       SENTRY_PROJECT &&
       SENTRY_AUTH_TOKEN &&
-      COMMIT_SHA &&
-      NODE_ENV === 'production'
+      COMMIT_SHA
     ) {
       config.plugins.push(
         new SentryWebpackPlugin({
@@ -71,4 +71,5 @@ module.exports = withSourceMaps({
 
     return config
   },
+  basePath,
 })
